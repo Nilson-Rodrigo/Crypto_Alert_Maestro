@@ -1,5 +1,9 @@
 appId: com.cryptoalert.app
 ---
+- extendedWaitUntil:
+    visible:
+      id: tab-alerts
+    timeout: 60000
 - tapOn:
     id: tab-alerts
 - assertVisible: '^Price Alerts$'

@@ -7,6 +7,10 @@ name: Criar alerta de Bitcoin e conferir persistência
 - stopApp
 - launchApp:
     clearState: false
+- extendedWaitUntil:
+    visible:
+      id: tab-alerts
+    timeout: 60000
 - tapOn:
     id: tab-alerts
 - assertVisible: '^Price Alerts$'

@@ -3,6 +3,10 @@ name: Converter 2 BTC de USD para BRL
 ---
 - launchApp:
     clearState: true
+- extendedWaitUntil:
+    visible:
+      id: tab-convert
+    timeout: 60000
 - tapOn:
     id: tab-convert
 - assertVisible: '^Convert Crypto$'
