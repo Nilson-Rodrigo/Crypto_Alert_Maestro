@@ -1,56 +1,88 @@
-# Welcome to your Expo app 👋
+# Crypto Alert · Testes E2E com Maestro
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Atividade sobre o [React Native Crypto Alert da Rocketseat](https://github.com/rocketseat-education/react-native-crypto-alert). A suíte exercita a conversão e o gerenciamento de alertas pela interface Android.
 
-## Get started
+## Pré-requisitos no Linux
 
-1. Install dependencies
+- Node.js 20.19 ou superior compatível com o Expo SDK 55 e npm.
+- Android Studio com Android SDK Platform 36, Android SDK Build-Tools, Platform-Tools e Android Emulator. Aceite as licenças no SDK Manager. O Gradle pode baixar o NDK e o CMake requeridos no primeiro build.
+- JDK 17 para o build Android e Java 17 ou superior para o Maestro.
+- [Maestro CLI](https://docs.maestro.dev/maestro-cli/how-to-install-maestro-cli). Os arquivos foram escritos para Maestro 2.x.
+
+## Instalar o app no emulador
+
+1. Na raiz do projeto, instale as dependências com `npm ci`.
+2. No Android Studio, abra **Tools → Device Manager**. Crie um dispositivo virtual, por exemplo um Pixel com Android 15 (API 35) ou Android 16 (API 36). Inicie-o e aguarde a tela inicial do Android.
+3. Se o SDK estiver no diretório padrão do Linux, configure o terminal assim. Ajuste o caminho se instalou o SDK em outro local.
 
    ```bash
-   npm install
+   export ANDROID_HOME="$HOME/Android/Sdk"
+   export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$HOME/.maestro/bin:$PATH"
+   adb devices
+   maestro --version
    ```
 
-2. Start the app
+4. Com o emulador listado como `device`, compile e instale a versão nativa.
 
    ```bash
-   npx expo start
+   npx expo run:android --variant release
+   adb shell pm path com.cryptoalert.app
    ```
 
-In the output, you'll find options to open the app in a
+   A segunda linha deve listar o APK instalado. O pacote vem de `app.json` e corresponde ao `appId` dos YAMLs. O build release incorpora o JavaScript e roda sem Metro.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+A chave da CoinGecko é opcional para os quatro fluxos. Para consultar a lista ao vivo, copie `.env.example` para `.env`, preencha `EXPO_PUBLIC_COINGECKO_API_KEY` e gere o build com essa configuração. Se a consulta falhar, a lista pode mostrar `Failed to load` e o conversor usa os preços locais.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Revisar manualmente e rodar a suíte
 
-## Get a fresh project
+Use um emulador de teste. Cada fluxo principal limpa os dados de `com.cryptoalert.app` na inicialização para começar sem alertas anteriores.
 
-When you're ready, run:
+| Fluxo | Verificação manual |
+| --- | --- |
+| [01 · Converter](.maestro/01-converter-bitcoin-para-brl.yaml) | Na aba `Convert`, informe 2 com Bitcoin e USD selecionados. Confira o resultado em dólar, troque USD por BRL e confira se o valor agora aparece com `R$`. |
+| [02 · Rejeitar preço zero](.maestro/02-bloquear-alerta-com-preco-zero.yaml) | Em `Alerts → New Alert`, selecione Bitcoin, informe 0 e confira se `Save Alert` está desabilitado. Volte e confirme que aparece `No alerts yet`. |
+| [03 · Criar e reabrir](.maestro/03-criar-e-reabrir-alerta.yaml) | Crie um alerta de Bitcoin acima de 50000 USD. Confira a condição e o cartão com `$50,000.00`. Encerre o processo do app, abra de novo e confirme que o mesmo cartão ainda aparece. |
+| [04 · Excluir](.maestro/04-excluir-alerta.yaml) | Em uma lista vazia, crie um alerta e toque na lixeira. Confira se aparece `No alerts yet`. |
+
+Na raiz, execute todos os fluxos ou somente um deles.
 
 ```bash
-npm run reset-project
+maestro test .maestro
+maestro test .maestro/03-criar-e-reabrir-alerta.yaml
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Se houver vários dispositivos conectados, selecione o serial mostrado por `adb devices`. Exemplo com `emulator-5554`.
 
-### Other setup steps
+```bash
+maestro --device emulator-5554 test .maestro
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+Se um seletor falhar, reproduza a ação e examine a interface com `maestro hierarchy`. A suíte usa textos visíveis e `testID` nos campos e controles em que um seletor estável ajuda a distinguir os elementos.
 
-## Learn more
+## Gravar dois fluxos para a entrega
 
-To learn more about developing your project with Expo, look at the following resources:
+Com o app instalado e o emulador aberto, rode os comandos abaixo. Para a gravação local, instale também o FFmpeg e deixe-o no `PATH`.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+mkdir -p evidencias
+maestro record --local .maestro/01-converter-bitcoin-para-brl.yaml evidencias/01-conversao.mp4
+maestro record --local .maestro/03-criar-e-reabrir-alerta.yaml evidencias/03-persistencia.mp4
+```
 
-## Join the community
+Abra os vídeos para conferir se mostram as verificações finais. Versione as gravações junto com o projeto quando estiverem prontas.
 
-Join our community of developers creating universal apps.
+## Publicar o repositório da atividade
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Se estiver usando a cópia entregue em ZIP, extraia-a e abra o terminal dentro de `Crypto_Alert_Maestro`. O histórico Git está incluído.
+
+Crie um repositório vazio no GitHub, sem README inicial. Substitua os dois marcadores pelo seu usuário e pelo nome do repositório. Configure o remoto somente uma vez e envie a branch.
+
+```bash
+git remote add origin https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git
+git push -u origin main
+```
+
+## Reflexão e planejamento
+
+- [Reflexão sobre o artigo GenIA-E2ETest](reflexao.md)
+- [Prompt, resposta original da IA e revisão dos cenários](ia/planejamento.md)
