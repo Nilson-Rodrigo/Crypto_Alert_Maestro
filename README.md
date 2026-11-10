@@ -59,7 +59,16 @@ maestro --device emulator-5554 test .maestro
 
 Se um seletor falhar, reproduza a ação e examine a interface com `maestro hierarchy`. A suíte usa textos visíveis e `testID` nos campos e controles em que um seletor estável ajuda a distinguir os elementos.
 
-## Gravar dois fluxos para a entrega
+## Resultado e evidências
+
+O APK nativo foi instalado em um emulador Android 11 (API 30). Os quatro fluxos passaram em execuções individuais com o Maestro 2.12.1.
+
+- [Conversão de 2 BTC para BRL](evidencias/01-converter-bitcoin-para-brl.png)
+- [Alerta de Bitcoin após fechar e reabrir o app](evidencias/03-criar-e-reabrir-alerta.png)
+
+As capturas mostram a tela logo após a última verificação de cada fluxo. O valor exibido pelo conversor pode variar com a cotação usada.
+
+### Regravar os fluxos
 
 Com o app instalado e o emulador aberto, rode os comandos abaixo. Para a gravação local, instale também o FFmpeg e deixe-o no `PATH`.
 

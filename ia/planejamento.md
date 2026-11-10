@@ -31,4 +31,4 @@
 - **Lista de criptomoedas.** O cenário foi adiado porque a tela de lista depende de uma resposta bem-sucedida da CoinGecko. As verificações escolhidas podem ser repetidas sem uma chave da API.
 - **Notificação.** O cenário foi descartado porque o código registra os alertas localmente e não implementa monitoramento de cotação ou disparo de notificação.
 
-Os rótulos e comportamentos foram conferidos no código. A revisão manual no emulador e a coleta de evidências estão descritas no README.
+Na primeira execução no Android, conferi a tela e a hierarquia de acessibilidade. Os campos selecionados mostram `Bitcoin (BTC)` e `BRL (R$)`. O cartão de alerta mostra apenas `Bitcoin`. Ajustei as verificações para distinguir esses rótulos e acrescentei uma espera pela aba visível na inicialização. Os resultados e as capturas estão no [README](../README.md).
