@@ -1,0 +1,22 @@
+appId: com.cryptoalert.app
+name: Bloquear alerta de Bitcoin com preço zero
+---
+- launchApp:
+    clearState: true
+- runFlow: subflows/abrir-formulario-bitcoin.yaml
+- inputText: '0'
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: save-alert
+    direction: DOWN
+- assertVisible:
+    id: save-alert
+    enabled: false
+- scrollUntilVisible:
+    element:
+      text: '^Go back$'
+    direction: UP
+- tapOn: '^Go back$'
+- assertVisible: '^Price Alerts$'
+- assertVisible: '^No alerts yet$'

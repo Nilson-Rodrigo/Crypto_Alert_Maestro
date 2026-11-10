@@ -1,0 +1,15 @@
+appId: com.cryptoalert.app
+name: Criar alerta de Bitcoin e conferir persistência
+---
+- launchApp:
+    clearState: true
+- runFlow: subflows/salvar-alerta-bitcoin.yaml
+- stopApp
+- launchApp:
+    clearState: false
+- tapOn:
+    id: tab-alerts
+- assertVisible: '^Price Alerts$'
+- assertVisible: '^Bitcoin$'
+- assertVisible: '^Alert when price goes above$'
+- assertVisible: '^\$50,000\.00$'

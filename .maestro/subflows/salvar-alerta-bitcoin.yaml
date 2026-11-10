@@ -1,0 +1,19 @@
+appId: com.cryptoalert.app
+---
+- runFlow: abrir-formulario-bitcoin.yaml
+- inputText: '50000'
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: save-alert
+    direction: DOWN
+- assertVisible:
+    id: save-alert
+    enabled: true
+- tapOn:
+    id: save-alert
+- assertVisible: '^Price Alerts$'
+- assertVisible: '^Bitcoin$'
+- assertVisible: '^Alert when price goes above$'
+- assertVisible: '^\$50,000\.00$'
+- assertNotVisible: '^No alerts yet$'

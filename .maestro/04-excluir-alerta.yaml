@@ -1,0 +1,10 @@
+appId: com.cryptoalert.app
+name: Excluir alerta de Bitcoin
+---
+- launchApp:
+    clearState: true
+- runFlow: subflows/salvar-alerta-bitcoin.yaml
+- tapOn: '^Delete alert$'
+- assertVisible: '^No alerts yet$'
+- assertNotVisible: '^Bitcoin$'
+- assertNotVisible: '^\$50,000\.00$'

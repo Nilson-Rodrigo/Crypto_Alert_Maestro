@@ -1,0 +1,15 @@
+appId: com.cryptoalert.app
+---
+- tapOn:
+    id: tab-alerts
+- assertVisible: '^Price Alerts$'
+- assertVisible: '^No alerts yet$'
+- tapOn: '^New Alert$'
+- assertVisible: '^Create Alert$'
+- tapOn:
+    id: alert-cryptocurrency
+- tapOn:
+    id: alert-cryptocurrency-option-bitcoin
+- assertVisible: '^Bitcoin$'
+- tapOn:
+    id: alert-target-price
