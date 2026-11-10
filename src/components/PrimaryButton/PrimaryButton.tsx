@@ -5,6 +5,7 @@ import { usePrimaryButton } from "./usePrimaryButton";
 
 interface PrimaryButtonProps {
   label: string;
+  testID?: string;
   onPress: () => void;
   disabled?: boolean;
   fullWidth?: boolean;
@@ -14,6 +15,7 @@ interface PrimaryButtonProps {
 
 export function PrimaryButton({
   label,
+  testID,
   onPress,
   disabled,
   fullWidth,
@@ -24,6 +26,7 @@ export function PrimaryButton({
 
   return (
     <Pressable
+      testID={testID}
       onPress={handlePress}
       disabled={disabled}
       style={({ pressed }) => [

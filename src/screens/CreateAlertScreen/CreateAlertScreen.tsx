@@ -34,6 +34,7 @@ export function CreateAlertScreen() {
       <View>
         <SelectField
           label="Cryptocurrency"
+          testID="alert-cryptocurrency"
           placeholder="Select cryptocurrency"
           options={cryptoOptions}
           value={selectedCrypto}
@@ -50,6 +51,7 @@ export function CreateAlertScreen() {
           <View style={createAlertScreenStyles.priceRow}>
             <Text style={createAlertScreenStyles.currency}>$</Text>
             <TextInput
+              testID="alert-target-price"
               style={createAlertScreenStyles.priceInput}
               placeholder="0.00"
               placeholderTextColor={colors.textMuted}
@@ -88,6 +90,7 @@ export function CreateAlertScreen() {
 
       <PrimaryButton
         label="Save Alert"
+        testID="save-alert"
         onPress={handleSave}
         disabled={!isFormValid}
         fullWidth

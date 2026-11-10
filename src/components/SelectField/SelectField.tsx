@@ -13,6 +13,7 @@ import { useSelectField } from "./useSelectField";
 
 interface SelectFieldProps {
   label: string;
+  testID?: string;
   placeholder?: string;
   options: SelectOption[];
   value: string;
@@ -21,6 +22,7 @@ interface SelectFieldProps {
 
 export function SelectField({
   label,
+  testID,
   placeholder = "Select",
   options,
   value,
@@ -34,6 +36,7 @@ export function SelectField({
     <View>
       <Text style={selectFieldStyles.label}>{label}</Text>
       <Pressable
+        testID={testID}
         onPress={open}
         style={selectFieldStyles.field}
         accessibilityRole="button"
@@ -72,6 +75,7 @@ export function SelectField({
             keyExtractor={(item) => item.value}
             renderItem={({ item }) => (
               <Pressable
+                testID={testID ? `${testID}-option-${item.value}` : undefined}
                 onPress={() => selectItem(item.value)}
                 style={[
                   selectFieldStyles.optionRow,

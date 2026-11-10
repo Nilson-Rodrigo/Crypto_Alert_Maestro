@@ -32,6 +32,7 @@ export function ConversionScreen() {
       <View style={conversionScreenStyles.fieldBlock}>
         <Text style={conversionScreenStyles.amountLabel}>Amount</Text>
         <TextInput
+          testID="conversion-amount"
           style={conversionScreenStyles.amountInput}
           placeholder="0.00"
           placeholderTextColor={colors.textMuted}
@@ -56,6 +57,7 @@ export function ConversionScreen() {
 
       <SelectField
         label="Fiat Currency"
+        testID="conversion-fiat"
         options={fiatOptions}
         value={selectedFiat}
         onChange={setSelectedFiat}
