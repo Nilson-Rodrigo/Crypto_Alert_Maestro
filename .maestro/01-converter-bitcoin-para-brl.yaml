@@ -10,7 +10,7 @@ name: Converter 2 BTC de USD para BRL
 - tapOn:
     id: tab-convert
 - assertVisible: '^Convert Crypto$'
-- assertVisible: '^Bitcoin$'
+- assertVisible: '^Bitcoin \(BTC\)$'
 - assertVisible: '^Enter an amount$'
 - tapOn:
     id: conversion-amount
@@ -29,7 +29,7 @@ name: Converter 2 BTC de USD para BRL
     id: conversion-fiat
 - tapOn:
     id: conversion-fiat-option-BRL
-- assertVisible: '^BRL$'
+- assertVisible: '^BRL \(R\$\)$'
 - scrollUntilVisible:
     element:
       text: '^Converted Amount$'

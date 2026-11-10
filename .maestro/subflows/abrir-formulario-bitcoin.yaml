@@ -14,6 +14,6 @@ appId: com.cryptoalert.app
     id: alert-cryptocurrency
 - tapOn:
     id: alert-cryptocurrency-option-bitcoin
-- assertVisible: '^Bitcoin$'
+- assertVisible: '^Bitcoin \(BTC\)$'
 - tapOn:
     id: alert-target-price
